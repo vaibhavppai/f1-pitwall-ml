@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formula 1 AI PitWall - Group 4</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div id="tour-overlay">
+  <div class="tour-content">
+    <h2>Welcome to F1 AI PitWall</h2>
+    <p>Click the <span class="tour-highlight">☀️/🌙</span> button in the top‐right to switch between Light and Dark mode.</p>
+    <p>Click on any image to open it full‐screen.</p>
+    <p class="tour-continue">Click anywhere to continue</p>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+<main class="container">
+
+
+
+
+
+    
+
+
+    
+<header class="hero-banner">
+    <h1>Formula 1 AI PitWall</h1>
+    <h2>CS 7641 - Summer 25 - Group 4</h2>
+</header>
+
+<div id="theme-toggle">
+    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.106a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.894 17.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.894 17.894a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM3 12a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5H2.25A.75.75 0 013 12zM6.106 6.106a.75.75 0 001.06-1.06l-1.591-1.59a.75.75 0 00-1.061 1.06l1.591 1.59z"></path></svg>
+    <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 004.463-.948.75.75 0 01.82.162a10.5 10.5 0 11-14.4-14.4.75.75 0 01.819.162z" clip-rule="evenodd"></path></svg>
+</div>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="tire-choice-model.html">Tyre Choice Model</a>
+    <a href="qualifying-pace-predictor.html">Qualifying Predictor</a>
+    <a href="track-analysis.html">Track Analysis</a>
+    <a href="pit-stop-predictor.html">Pit Stop Predictor</a>
+    <a href="driver-analysis.html">Driver DNA</a> </nav>
+</nav>
+
+<section id="introduction">
+    <h2>Introduction</h2>
+    <p>
+        Formula 1 isn't just the world's most popular motorsport; it's a high-speed chess match played out at 200 mph. Millions watch, and fortunes are won and lost on the razor's edge of performance. To find that edge, teams and fans alike turn to data. Our project dives deep into this world, leveraging a suite of powerful machine learning tools. We've integrated data from 
+        <a href="https://theoehrly.github.io/Fast-F1/" target="_blank"style="color: red;"><strong>FastF1</strong></a> for unparalleled access to timing and telemetry, 
+        the <a href="https://github.com/TUMFTM/racetrack-database" target="_blank"style="color: red;"><strong>TUMFTM Racetrack Database</strong></a> for intricate track details, and 
+        <a href="https://github.com/bacinger/f1-circuits" target="_blank"style="color: red;"><strong>Tomo Bacinger’s F1 Circuit Data</strong></a> for precise geographical insights. 
+        This fusion of data is the fuel for our predictive engine, aiming to decode the DNA of a race weekend.
+    </p>
+</section>
+
+<section id="motivation">
+    <h2>Our Motivation</h2>
+    <p>Formula 1 is a symphony of driver skill, engineering genius, and strategic cunning. With countless interdependent variables, it presents the perfect challenge for machine learning. Our motivation was to build a tool that serves three core missions:</p>
+    <div class="grid-3">
+        <div class="card">
+            <h3>Race Strategy Simulation</h3>
+            <p>From the pit wall, every decision is critical. When to pit? Which tire compound to choose? How hard to push? Our framework serves as a powerful race simulator, running thousands of scenarios to help identify the optimal strategy before the lights go out.</p>
+        </div>
+        <div class="card">
+            <h3>Advanced Sporting Analytics</h3>
+            <p>F1 operates in a unique small-data, high-complexity environment. With non-stationary patterns driven by rule changes and car upgrades, it's a formidable research challenge. We've developed models to tackle time-series forecasting and multimodal feature integration in this dynamic arena.</p>
+        </div>
+        <div class="card">
+            <h3>For the F1 Community</h3>
+            <p>Public predictions are often simplistic. We aim to change that. Our goal is to deliver accurate, data-driven, and interpretable predictions to the global F1 audience, elevating the conversation and empowering fans with real analytical firepower.</p>
+        </div>
+    </div>
+</section>
+
+<section id="methods">
+    <h2>The Pit-Stop Dashboard</h2>
+    <p>Our project is built on 5 distinct analytical models, each designed to deconstruct a key component of a Formula 1 race weekend. Click on any module below to jump directly to its performance analysis and results.</p>
+    
+    <a href="tire-choice-model.html" class="method-link-card">
+        <article class="method-card">
+            <h3>The Rubber Revolution: Tire Choice Modeling</h3>
+            <p>This model analyzes historical weather and environmental data to predict the optimal tire compound choice, forming the foundation of any successful race strategy.</p>
+        </article>
+    </a>
+
+    <a href="qualifying-pace-predictor.html" class="method-link-card">
+        <article class="method-card">
+            <h3>Chasing Pole Position: Qualifying Pace Predictor</h3>
+            <p>Focusing on the crucial battle for grid position, this model uses a range of performance metrics to forecast the ultimate single-lap pace of each driver.</p>
+        </article>
+    </a>
+
+    <a href="track-analysis.html" class="method-link-card">
+        <article class="method-card">
+            <h3>Decoding the Circuits: Track Analysis</h3>
+            <p>Using unsupervised clustering, this module categorizes every F1 circuit into distinct archetypes based on its geometric characteristics, such as cornering intensity and high-speed sections.</p>
+        </article>
+    </a>
+
+    <a href="pit-stop-predictor.html" class="method-link-card">
+        <article class="method-card">
+        <h3>The Undercut: Tire Stint & Pitstop Predictor</h3>
+            <p>This model predicts the viable length of a tire stint by synthesizing track characteristics, weather conditions, and tire compound data to inform pit stop strategy.</p>
+        </article>
+    </a>
+
+    <a href="driver-analysis.html" class="method-link-card">
+        <article class="method-card">
+        <h3>Driver DNA: Decoding Driver Performance</h3>
+            <p>Analyzing driver telemetry data to understand driving styles and breaking down performance attributes. Furthers understanding of circuit layouts to discover the unsaid but ingrained rules of being an F1 driver.</p>
+        </article>
+    </a>
+</section>
+
+
+<footer class="site-footer">
+    <div class="footer-section">
+        <h4>References</h4>
+        <ol>
+            <li>F. Brusik, Predicting Lap Times in a Formula 1 Race Using Deep Learning Algorithms, 2024.</li>
+            <li>E. El Haber et al., "Formula 1 Race Winner Prediction Using Random Forest and SHAP Analysis," 2025.</li>
+            <li>S. A. Menon et al., "F1 Lap Analysis and Result Prediction," 2024.</li>
+            <li>C. L. W. Choo, Real-time decision making in motorsports, 2015.</li>
+            <li>M. Keertish Kumar and N. Preethi, "Formula One Race Analysis Using Machine Learning," 2023.</li>
+        </ol>
+    </div>
+
+    <div class="footer-section">
+        <h4>Project Resources</h4>
+        <ul class="resource-links">
+            <li><a href="https://gtvault.sharepoint.com/:x:/s/ML7641Project568/EUXYbfK5vtJGrfBQwmEdczsBMaH1GnclwjVkn6ma7PoFgg?e=tfWXDv" target="_blank">View the Gantt Chart</a></li>
+            <li><a href="https://youtu.be/QrAcd8dy-o4" target="_blank">View our Project Proposal Presentation</a></li>
+            <li><a href="https://gtvault.sharepoint.com/:p:/s/ML7641Project568/EeoJLlt2CJ9AuVhaN37ZVsoB3P0uHIVMmfrBcFfQ6_1i3Q?e=lprBsp" target="_blank">View the Final Presentation</a></li>
+
+        </ul>
+    </div>
+
+    <div class="footer-section">
+        <h4>The Pit Crew</h4>
+        <table>
+            <thead><tr><th>Team Member</th><th>Contributions</th></tr></thead>
+            <tbody>
+                <tr><td>Krtin Kala</td><td>Track Clustering, Driver Analysis, Web Page Design</td></tr>
+                <tr><td>Vaibhav Pai</td><td>Track Clustering, Driver Analysis, Web Page Design</td></tr>
+                <tr><td>Paras Singh</td><td>Best Qualifying Lap Predictor</td></tr>
+                <tr><td>Carter Tegen</td><td>Tire Change Analysis</td></tr>
+                <tr><td>Sreevickrant Sreekanth</td><td>Tire Stint and Pitstop Predictor</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer-award">
+        <p>We will opt in for the award consideration.</p>
+    </div>
+</footer>
+
+</main>
+
+<script>
+(function() {
+    const themeToggleButton = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    // Function to apply the saved theme on page load
+    const applyTheme = () => {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            body.classList.add('light-mode');
+        }
+    };
+
+    // Function to toggle the theme and save the preference
+    const toggleTheme = () => {
+        body.classList.toggle('light-mode');
+        let currentTheme = 'dark'; // Default to dark
+        if (body.classList.contains('light-mode')) {
+            currentTheme = 'light';
+        }
+        localStorage.setItem('theme', currentTheme);
+    };
+
+    // Add event listener to the button
+    themeToggleButton.addEventListener('click', toggleTheme);
+
+    // Apply the saved theme when the page loads
+    applyTheme();
+})();
+</script>
+
+</script>
+
+<div id="scroll-race-track">
+    <div class="line"></div>
+    <div class="line"></div>
+    <img id="scroll-f1-car" src="assets/css/racing-car.png" alt="F1 car scroll progress indicator">
+    <img id="checkered-flag" src="assets/css/start.png" alt="Checkered flag">
+</div>
+    
+<script>
+(function() {
+    const car = document.getElementById('scroll-f1-car');
+    const track = document.getElementById('scroll-race-track');
+
+    if (!car || !track) return;
+
+    const controlCarPosition = () => {
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
+        
+        // Prevent division by zero on pages that don't scroll
+        if (documentHeight <= 0) return;
+
+        const scrollPercent = scrollTop / documentHeight;
+        
+        // Calculate the total raceable distance on the track
+        // (Track height minus car height minus flag height and some padding)
+        const raceableHeight = track.offsetHeight - car.offsetHeight - 50;
+        
+        // Calculate the new top position
+        const newTop = scrollPercent * raceableHeight;
+
+        car.style.top = `${newTop}px`;
+    };
+
+    window.addEventListener('scroll', controlCarPosition, { passive: true });
+    
+    // Set initial position on load
+    controlCarPosition();
+
+})();
+    
+</script>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const overlay = document.getElementById('tour-overlay');
+    if (!overlay) return;
+    // Don’t let clicks “through” to the page
+    overlay.addEventListener('click', e => {
+      overlay.style.display = 'none';
+    });
+  });
+</script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

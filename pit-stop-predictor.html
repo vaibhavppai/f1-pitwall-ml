@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pit Stop Predictor - F1 AI PitWall</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<main class="container">
+
+<header class="hero-banner">
+    <h1>Formula 1 AI PitWall</h1>
+    <h2>CS 7641 - Summer 25 - Group 4</h2>
+</header>
+    
+<div id="theme-toggle">
+    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.106a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.894 17.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.894 17.894a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM3 12a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5H2.25A.75.75 0 013 12zM6.106 6.106a.75.75 0 001.06-1.06l-1.591-1.59a.75.75 0 00-1.061 1.06l1.591 1.59z"></path></svg>
+    <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 004.463-.948.75.75 0 01.82.162a10.5 10.5 0 11-14.4-14.4.75.75 0 01.819.162z" clip-rule="evenodd"></path></svg>
+</div>
+    
+<nav>
+    <a href="index.html">Home</a>
+    <a href="tire-choice-model.html">Tyre Choice Model</a>
+    <a href="qualifying-pace-predictor.html">Qualifying Predictor</a>
+    <a href="track-analysis.html">Track Analysis</a>
+    <a href="pit-stop-predictor.html">Pit Stop Predictor</a>
+    <a href="driver-analysis.html">Driver DNA</a> </nav>
+</nav>
+
+<section id="results-pit-stop">
+    <h2>Analysis: Pit Stop & Stint Predictor</h2>
+    <article class="results-card">
+        <h3>Pit Stop & Stint Predictor: The Verdict</h3>
+        <div class="gallery-grid">
+            <a href="pit_stop_predictor/img/avg_starting_tire_life.png" class="js-lightbox-trigger"><img src="pit_stop_predictor/img/avg_starting_tire_life.png" alt="Average Starting Tyre Life by Compound and Track Temperature Range"></a>
+            <a href="pit_stop_predictor/img/avg_sting_length_by_tire_compound.png" class="js-lightbox-trigger"><img src="pit_stop_predictor/img/avg_sting_length_by_tire_compound.png" alt="Average Stint Length by Tyre Compound"></a>
+            <a href="pit_stop_predictor/img/track_temperature_stint_length.png" class="js-lightbox-trigger"><img src="pit_stop_predictor/img/track_temperature_stint_length.png" alt="Track Temperature and Stint Length"></a>
+            <a href="pit_stop_predictor/img/correlation_matrix.png" class="js-lightbox-trigger"><img src="pit_stop_predictor/img/correlation_matrix.png" alt="Heatmap of Feature Importance"></a>
+            <a href="pit_stop_predictor/img/feature_importance_random_forest.png" class="js-lightbox-trigger"><img src="pit_stop_predictor/img/feature_importance_random_forest.png" alt="Feature Importance for Random Forest Model"></a>
+            <a href="pit_stop_predictor/img/predicted_stint_lengths.png" class="js-lightbox-trigger"><img src="pit_stop_predictor/img/predicted_stint_lengths.png" alt="Predicted vs Actual Stint Length for Alex Albon"></a>
+            <a href="pit_stop_predictor/img/nor_bahrain.png" class="js-lightbox-trigger"><img src="pit_stop_predictor/img/nor_bahrain.png" alt="Normalized Stint Length Analysis for Bahrain Grand Prix"></a>
+            <a href="pit_stop_predictor/img/nor_silverstone.png" class="js-lightbox-trigger"><img src="pit_stop_predictor/img/nor_silverstone.png" alt="Normalized Stint Length Analysis for Silverstone Grand Prix"></a>
+        
+        </div>
+        <h4>Data Preprocessing</h4>
+        <p>Using FastF1 lap‑by‑lap & weather data (2022–2025). Extracted: compound type, tire life, stint length, avg. rainfall, avg. pressure, avg. wind direction, avg. wind speed, avg. track temperature. One‑hot encoding for categorical variables.</p>
+        
+        <h4>ML Algorithms / Models Implemented</h4>
+         <p>
+    Linear Regression, Random Forest, and XGBoost to predict first‑stint lengths.
+    After the midterm report, we determined that the above implemented algorithms do not work well. We did additional feature engineering 
+    and shifted to time-series based predictions and try to predict the remaining laps a tire can last. The shift in perspective have helped us
+    model tire degradation over the duration of an entire race. 
+  </p>
+        
+        <h4>Quantitative Metrics</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>MAE</th>
+                    <th>MSE</th>
+                    <th>RMSE</th>
+                    <th>R<sup>2</sup></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Linear Regression</td>
+                    <td>7.712788</td>
+                    <td>100.567019</td>
+                    <td>10.028311</td>
+                    <td>0.142442</td>
+                </tr>
+                <tr>
+                    <td>Random Forest</td>
+                    <td>4.685028</td>
+                    <td>55.157687</td>
+                    <td>7.426822</td>
+                    <td>0.529658</td>
+                </tr>
+                <tr>
+                    <td>XGBoost</td>
+                    <td>4.855137</td>
+                    <td>57.848294</td>
+                    <td>7.605807</td>
+                    <td>0.506715</td>
+                </tr>
+                <tr>
+                    <td>LSTM</td>
+                    <td>-</td>
+                    <td>12.8782</td>
+                    <td>3.5886</td>
+                    <td>0.8862</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>Final Model Analysis</h4>
+        <p>In the midtern, the Random Forest model emerged as the most effective predictor of tire stint length, achieving a final R² of 0.53. 
+            Its ability to capture non-linear relationships between features like weather and tire wear proved superior to other models. 
+            However, the moderate R² value indicates a clear conclusion: predicting stint length is impossible without accounting 
+            for dynamic, in-race events. The model's performance is limited by its inability to factor in variables like safety cars, 
+            red flags, and on-track battles, confirming that these chaotic elements are as critical to strategy as the initial data.
+
+            We alleviated some of these concerns by using LSTM with additional features such as the time of the tire, lap times, car speed through various sections
+            of the track and stint lengths. The RNN was able to model how many laps a tyre had remaining. We would however like to make additional modifications such 
+            as incorporating tire choices and on-track conditions such as red flags, yellow flags, and safety cars to better model tire degradation.
+        
+        </p>
+    </article>
+</section>
+
+<footer class="site-footer">
+    <div class="footer-section">
+        <h4>References</h4>
+        <ol>
+            <li>F. Brusik, Predicting Lap Times in a Formula 1 Race Using Deep Learning Algorithms, 2024.</li>
+            <li>E. El Haber et al., "Formula 1 Race Winner Prediction Using Random Forest and SHAP Analysis," 2025.</li>
+            <li>S. A. Menon et al., "F1 Lap Analysis and Result Prediction," 2024.</li>
+            <li>C. L. W. Choo, Real-time decision making in motorsports, 2015.</li>
+            <li>M. Keertish Kumar and N. Preethi, "Formula One Race Analysis Using Machine Learning," 2023.</li>
+        </ol>
+    </div>
+    <div class="footer-section">
+        <h4>Project Resources</h4>
+        <ul class="resource-links">
+            <li><a href="https://gtvault.sharepoint.com/:x:/s/ML7641Project568/EUXYbfK5vtJGrfBQwmEdczsBMaH1GnclwjVkn6ma7PoFgg?e=tfWXDv" target="_blank">View the Gantt Chart</a></li>
+            <li><a href="https://youtu.be/QrAcd8dy-o4" target="_blank">View our Project Proposal Presentation</a></li>
+            <li><a href="https://gtvault.sharepoint.com/:p:/s/ML7641Project568/EeoJLlt2CJ9AuVhaN37ZVsoB3P0uHIVMmfrBcFfQ6_1i3Q?e=lprBsp" target="_blank">View the Final Presentation</a></li>
+        </ul>
+    </div>
+    <div class="footer-section">
+        <h4>The Pit Crew</h4>
+        <table>
+            <thead><tr><th>Team Member</th><th>Contributions</th></tr></thead>
+            <tbody>
+                <tr><td>Krtin Kala</td><td>Track Clustering, Driver Analysis, Web Page Design</td></tr>
+                <tr><td>Vaibhav Pai</td><td>Track Clustering, Driver Analysis, Web Page Design</td></tr>
+                <tr><td>Paras Singh</td><td>Best Qualifying Lap Predictor</td></tr>
+                <tr><td>Carter Tegen</td><td>Tire Change Analysis</td></tr>
+                <tr><td>Sreevickrant Sreekanth</td><td>Tire Stint and Pitstop Predictor</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="footer-award">
+        <p>We will opt in for the award consideration.</p>
+    </div>
+</footer>
+
+</main>
+
+<div class="lightbox js-lightbox" id="image-lightbox">
+  <div class="lightbox-content">
+    <span class="lightbox-close js-lightbox-close">×</span>
+    <img src="" alt="Fullscreen image" class="lightbox-image">
+  </div>
+</div>
+
+<script>
+(function(){
+  const lb    = document.getElementById('image-lightbox');
+  const img   = lb.querySelector('.lightbox-image');
+  const close = lb.querySelector('.lightbox-close');
+  const triggers = document.querySelectorAll('.js-lightbox-trigger');
+  triggers.forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      img.src = a.href;
+      lb.classList.add('is-visible');
+    });
+  });
+  [close, lb].forEach(el => {
+    el.addEventListener('click', e => {
+      if (el === lb && e.target !== lb) return;
+      lb.classList.remove('is-visible');
+      img.src = '';
+    });
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && lb.classList.contains('is-visible')) {
+      lb.classList.remove('is-visible');
+      img.src = '';
+    }
+  });
+})();
+</script>
+
+<script>
+(function() {
+    const themeToggleButton = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    // Function to apply the saved theme on page load
+    const applyTheme = () => {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            body.classList.add('light-mode');
+        }
+    };
+
+    // Function to toggle the theme and save the preference
+    const toggleTheme = () => {
+        body.classList.toggle('light-mode');
+        let currentTheme = 'dark'; // Default to dark
+        if (body.classList.contains('light-mode')) {
+            currentTheme = 'light';
+        }
+        localStorage.setItem('theme', currentTheme);
+    };
+
+    // Add event listener to the button
+    themeToggleButton.addEventListener('click', toggleTheme);
+
+    // Apply the saved theme when the page loads
+    applyTheme();
+})();
+</script>
+
+    </script>
+
+<div id="scroll-race-track">
+    <div class="line"></div>
+    <div class="line"></div>
+    <img id="scroll-f1-car" src="assets/css/racing-car.png" alt="F1 car scroll progress indicator">
+    <img id="checkered-flag" src="assets/css/start.png" alt="Checkered flag">
+</div>
+    
+<script>
+(function() {
+    const car = document.getElementById('scroll-f1-car');
+    const track = document.getElementById('scroll-race-track');
+
+    if (!car || !track) return;
+
+    const controlCarPosition = () => {
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
+        
+        // Prevent division by zero on pages that don't scroll
+        if (documentHeight <= 0) return;
+
+        const scrollPercent = scrollTop / documentHeight;
+        
+        // Calculate the total raceable distance on the track
+        // (Track height minus car height minus flag height and some padding)
+        const raceableHeight = track.offsetHeight - car.offsetHeight - 50;
+        
+        // Calculate the new top position
+        const newTop = scrollPercent * raceableHeight;
+
+        car.style.top = `${newTop}px`;
+    };
+
+    window.addEventListener('scroll', controlCarPosition, { passive: true });
+    
+    // Set initial position on load
+    controlCarPosition();
+})();
+</script>
+    
+</body>
+</html>

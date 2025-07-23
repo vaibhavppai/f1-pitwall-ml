@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qualifying Pace Predictor - F1 AI PitWall</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<main class="container">
+
+<header class="hero-banner">
+    <h1>Formula 1 AI PitWall</h1>
+    <h2>CS 7641 - Summer 25 - Group 4</h2>
+</header>
+    
+<div id="theme-toggle">
+    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.106a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.894 17.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.894 17.894a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM3 12a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5H2.25A.75.75 0 013 12zM6.106 6.106a.75.75 0 001.06-1.06l-1.591-1.59a.75.75 0 00-1.061 1.06l1.591 1.59z"></path></svg>
+    <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 004.463-.948.75.75 0 01.82.162a10.5 10.5 0 11-14.4-14.4.75.75 0 01.819.162z" clip-rule="evenodd"></path></svg>
+</div>
+    
+<nav>
+    <a href="index.html">Home</a>
+    <a href="tire-choice-model.html">Tyre Choice Model</a>
+    <a href="qualifying-pace-predictor.html">Qualifying Predictor</a>
+    <a href="track-analysis.html">Track Analysis</a>
+    <a href="pit-stop-predictor.html">Pit Stop Predictor</a>
+    <a href="driver-analysis.html">Driver DNA</a> </nav>
+</nav>
+
+<section id="results-qualifying">
+    <h2>Analysis: Qualifying Pace Predictor</h2>
+    <article class="results-card">
+        <h3>Chasing Pole Position: Qualifying Pace Predictor</h3>
+        
+        <h4>Data Preprocessing</h4>
+        <p>
+    To predict the best qualifying lap times for each driver across a race weekend, data from all Formula 1 races between the 2022 and 2025 seasons was collected using the FastF1 API.
+
+    A range of features influencing qualifying lap times was selected, including:
+
+    <ul>
+      <li><strong>Event Metadata:</strong> Year, Round, Circuit Type</li>
+      <li><strong>Driver Factors:</strong> Driver, Team, Tyre Compound, Tyre Life, Fresh Tyre status</li>
+      <li><strong>Weather:</strong> Air Temperature, Humidity, Pressure, Rainfall, Wind Speed, Wind Direction</li>
+      <li><strong>Performance Metrics:</strong> Sector 1/2/3 times, FP2 lap times, FP2 gap to best lap</li>
+    </ul>
+  </p>
+
+         <h4>Feature Engineering</h4>
+  <p>
+      <ul>
+    <li>Categorical features (Driver, Team, Tyre Compound) → One‑Hot Encoding</li>
+    <li>Numerical features (Weather, Tyre Life, Sector Times) → z‑score normalization</li>
+    <li>Resolved team‑name rebrands (e.g. “Alfa Romeo” → “Stake”) for consistency</li>
+  </ul>
+      </p>
+
+  <h4>ML Algorithms / Models Implemented</h4>
+  <p>
+  To model qualifying lap times as a regression problem, we implemented the following machine learning algorithms:
+</p>
+<ul>
+  <li><strong>Linear Regression</strong></li>
+  <li><strong>Lasso Regression</strong></li>
+  <li><strong>Ridge Regression</strong></li>
+  <li><strong>Support Vector Regression</strong></li>
+  <li><strong>Random Forest Regression</strong></li>
+  <li><strong>Gradient Boosting Regression</strong></li>
+</ul>
+<p>
+  To ensure the models generalize well and avoid overfitting, we employed <strong>5-fold cross-validation</strong> 
+  using <strong>GridSearchCV</strong> for hyperparameter tuning and performance evaluation.
+</p>
+
+<h4>Visualizations</h4>
+
+ <div class="gallery-grid">
+            <a href="Qualifying_Lap_Predictor/images/feature_correlation_map.png" class="js-lightbox-trigger"><img src="Qualifying_Lap_Predictor/images/feature_correlation_map.png" alt="Feature Correlation Heatmap"></a>
+             <a href="Qualifying_Lap_Predictor/images/feature_correlation_map_2.png" class="js-lightbox-trigger"><img src="Qualifying_Lap_Predictor/images/feature_correlation_map_2.png" alt="Feature Correlation Heatmap"></a>
+ </div>
+
+        <p>
+    The lap time vs. tyre compound plot shows that soft tyres consistently produce the fastest lap times due
+to their superior grip. Medium and hard tyres are occasionally used in dry conditions for strategic
+reasons, such as preserving soft sets. The compound usage frequency plot supports this trend. In wet
+conditions, drivers switch to intermediate or wet tyres, which yield slower lap times. The tyre life plot
+further confirms that fresher tyres generally result in faster qualifying laps.
+  </p>
+
+<div class="gallery-grid">
+            <a href="Qualifying_Lap_Predictor/images/lap_time_by_compound.png" class="js-lightbox-trigger"><img src="Qualifying_Lap_Predictor/images/lap_time_by_compound.png" alt="Lap Time by Tyre Compound"></a>
+            <a href="Qualifying_Lap_Predictor/images/lap_time_by_tyre_life.png" class="js-lightbox-trigger"><img src="Qualifying_Lap_Predictor/images/lap_time_by_tyre_life.png" alt="Lap Time by Tyre Life"></a>
+            <a href="Qualifying_Lap_Predictor/images/tyre_compound_frequency.png" class="js-lightbox-trigger"><img src="Qualifying_Lap_Predictor/images/tyre_compound_frequency.png" alt="Tyre compund usage frequency"></a>
+</div>
+        <p>
+    The Predicted vs Actual plot shows a strong linear relationship between predicted and actual qualifying
+lap times, with most points lying close to the diagonal, indicating high prediction accuracy. Additionally,
+the Residual Plot (Actual − Predicted) shows that residuals are mostly centered around zero, with no
+strong pattern, suggesting that the model is unbiased across the prediction range. The Residual
+Distribution plot further confirms this, showing a roughly normal distribution of residuals with a sharp
+peak near zero indicating low variance.
+
+  </p>
+
+        <div class="gallery-grid">
+            <a href="Qualifying_Lap_Predictor/images/GB_R2_score.png" class="js-lightbox-trigger"><img src="Qualifying_Lap_Predictor/images/GB_R2_score.png" alt="Predicted vs Actual Lap Times"></a>
+            <a href="Qualifying_Lap_Predictor/images/residual_plot_1.png" class="js-lightbox-trigger"><img src="Qualifying_Lap_Predictor/images/residual_plot_1.png" alt="Residual Plot 1"></a>
+            <a href="Qualifying_Lap_Predictor/images/residual_plot_2.png" class="js-lightbox-trigger"><img src="Qualifying_Lap_Predictor/images/residual_plot_2.png" alt="Residual Plot 2"></a>
+        </div>
+
+        <p>
+To evaluate the model’s performance, the qualifying lap times were predicted for the latest races of the
+2025 F1 season (The data for these races was not used in the model training). For the Japanese and Australian GP, the
+model predicted lap times with high accuracy for all drivers, with errors mostly below 0.3 seconds,
+demonstrating strong consistency. In contrast, the Spanish, and Miami GP shows larger deviations for some
+drivers (up to 0.8 seconds), suggesting potential anomalies in session conditions or driver-specific
+factors not captured by the model.
+
+  </p>
+
+        <div class="gallery-grid">
+            <a href="Qualifying_Lap_Predictor/images/Spain_2025_predictions.png" class="js-lightbox-trigger"><img src="Qualifying_Lap_Predictor/images/Spain_2025_predictions.png" alt="Spain GP 2025 Predictions"></a>
+            <a href="Qualifying_Lap_Predictor/images/Miami_2025_predictions.png" class="js-lightbox-trigger"><img src="Qualifying_Lap_Predictor/images/Miami_2025_predictions.png" alt="Miami GP 2025 Predictions"></a>
+            <a href="Qualifying_Lap_Predictor/images/Japan_2025_predictions.png" class="js-lightbox-trigger"><img src="Qualifying_Lap_Predictor/images/Japan_2025_predictions.png" alt="Japan GP 2025 Predictions"></a>
+            <a href="Qualifying_Lap_Predictor/images/Australia_2025_predictions.png" class="js-lightbox-trigger"><img src="Qualifying_Lap_Predictor/images/Australia_2025_predictions.png" alt="Australian GP 2025 Predictions"></a>
+        </div>
+
+<h4>Quantitative Metrics</h4>
+        <table>
+            <thead><tr><th>Model</th><th>MAE</th><th>RMSE</th><th>R²</th></tr></thead>
+            <tbody>
+                <tr><td>Gradient Boosting</td><td>0.9043</td><td>2.3977</td><td>0.957</td></tr>
+                <tr><td>Random Forest</td><td>0.9042</td><td>2.4827</td><td>0.954</td></tr>
+                <tr><td>Support Vector Regression</td><td>1.0316</td><td>2.6040</td><td>0.950</td></tr>
+                <tr><td>Ridge Regression</td><td>1.3056</td><td>2.6785</td><td>0.947</td></tr>
+                <tr><td>Linear Regression</td><td>1.3059</td><td>2.6786</td><td>0.947</td></tr>
+                <tr><td>Lasso Regression</td><td>1.5069</td><td>2.8077</td><td>0.942</td></tr>
+            </tbody>
+        </table>
+
+
+
+    <h4>Final Model Analysis</h4>
+        <p> The ensemble methods lead in prediction accuracy with the Gradient Boosting Regression model showing strong predictive performance with an R² score of
+            0.957 on the test set. The Random Forest regression model performed nearly identically in terms of MAE, but had a slightly higher RMSE and lower R². 
+            Furthermore, SVR performs competitively, despite being a non-ensemble model. It offers strong performance, suggesting it captures the underlying non-linear relationships between features effectively.
+            Linear and Ridge regression models show identical performance, with both having similar metrics, indicating that regularization in Ridge has minimal effect, possibly due to well-behaved features. 
+            Finally, Lasso regression underperforms relative to the other models, likely due to its feature selection nature which may have discarded relevant predictors in this complex dataset.</p>
+
+             <p>
+            The predicted vs actual plot shows a near-linear alignment, while the residual plots
+            confirms that errors were mostly centered around zero and normally distributed, indicating minimal bias
+            and consistent performance across a wide range of lap times.</p>
+
+        <p>The model used the FP2 lap times, sector times, weather, and tyre-related data as key predictors.
+            Among these, FP2 performance showed the strongest correlation with qualifying pace, whcih is
+            expected due to similar track and ambient conditions between FP2 and qualifying sessions. In general,
+            the model performed well across different race weekends, though occasional deviations (as seen in the
+            Spanish and Miami GP 2025) suggest external factors like driver error, setup changes, or unusual session events
+            may affect prediction accuracy.</p>
+
+    <h4>Limitations and Future Work</h4>
+    <p>
+  While the model provides a reasonable estimate of qualifying lap times, several limitations hinder its ability to capture the fine margings in Qualifying sessions:
+</p>
+
+<h5>1. Fine Margin Prediction</h5>
+<p>
+  The model struggles to accurately predict small lap time gaps (~0.1s), which are crucial for determining grid positions. In tightly contested qualifying sessions, even a slight error can misplace drivers by multiple spots.
+</p>
+
+<h5>2. Limited Feature Context</h5>
+<p>
+  The current feature set lacks session-specific signals such as FP3 performance, track evolution, and driver consistency trends. Including these can improve the model’s sensitivity to real-time conditions and subtle performance differences.
+</p>
+
+<h5>3. Ranking Accuracy Over Raw Time</h5>
+<p>
+  Since qualifying is about relative pace, improving the model’s ability to rank drivers correctly is essential. Enhanced feature engineering — including tire wear trends or driver form across sessions — can better reflect the competitive order.
+</p>
+    
+    </article>
+</section>
+
+<footer class="site-footer">
+    <div class="footer-section">
+        <h4>References</h4>
+        <ol>
+            <li>F. Brusik, Predicting Lap Times in a Formula 1 Race Using Deep Learning Algorithms, 2024.</li>
+            <li>E. El Haber et al., "Formula 1 Race Winner Prediction Using Random Forest and SHAP Analysis," 2025.</li>
+            <li>S. A. Menon et al., "F1 Lap Analysis and Result Prediction," 2024.</li>
+            <li>C. L. W. Choo, Real-time decision making in motorsports, 2015.</li>
+            <li>M. Keertish Kumar and N. Preethi, "Formula One Race Analysis Using Machine Learning," 2023.</li>
+        </ol>
+    </div>
+    <div class="footer-section">
+        <h4>Project Resources</h4>
+        <ul class="resource-links">
+            <li><a href="https://gtvault.sharepoint.com/:x:/s/ML7641Project568/EUXYbfK5vtJGrfBQwmEdczsBMaH1GnclwjVkn6ma7PoFgg?e=tfWXDv" target="_blank">View the Gantt Chart</a></li>
+            <li><a href="https://youtu.be/QrAcd8dy-o4" target="_blank">View our Project Proposal Presentation</a></li>
+            <li><a href="https://gtvault.sharepoint.com/:p:/s/ML7641Project568/EeoJLlt2CJ9AuVhaN37ZVsoB3P0uHIVMmfrBcFfQ6_1i3Q?e=lprBsp" target="_blank">View the Final Presentation</a></li>
+        </ul>
+    </div>
+    <div class="footer-section">
+        <h4>The Pit Crew</h4>
+        <table>
+            <thead><tr><th>Team Member</th><th>Contributions</th></tr></thead>
+            <tbody>
+                <tr><td>Krtin Kala</td><td>Track Clustering, Driver Analysis, Web Page Design</td></tr>
+                <tr><td>Vaibhav Pai</td><td>Track Clustering, Driver Analysis, Web Page Design</td></tr>
+                <tr><td>Paras Singh</td><td>Best Qualifying Lap Predictor</td></tr>
+                <tr><td>Carter Tegen</td><td>Tire Change Analysis</td></tr>
+                <tr><td>Sreevickrant Sreekanth</td><td>Tire Stint and Pitstop Predictor</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="footer-award">
+        <p>We will opt in for the award consideration.</p>
+    </div>
+</footer>
+
+</main>
+
+<div class="lightbox js-lightbox" id="image-lightbox">
+  <div class="lightbox-content">
+    <span class="lightbox-close js-lightbox-close">×</span>
+    <img src="" alt="Fullscreen image" class="lightbox-image">
+  </div>
+</div>
+
+<script>
+(function(){
+  const lb    = document.getElementById('image-lightbox');
+  const img   = lb.querySelector('.lightbox-image');
+  const close = lb.querySelector('.lightbox-close');
+  const triggers = document.querySelectorAll('.js-lightbox-trigger');
+  triggers.forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      img.src = a.href;
+      lb.classList.add('is-visible');
+    });
+  });
+  [close, lb].forEach(el => {
+    el.addEventListener('click', e => {
+      if (el === lb && e.target !== lb) return;
+      lb.classList.remove('is-visible');
+      img.src = '';
+    });
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && lb.classList.contains('is-visible')) {
+      lb.classList.remove('is-visible');
+      img.src = '';
+    }
+  });
+})();
+</script>
+
+<script>
+(function() {
+    const themeToggleButton = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    // Function to apply the saved theme on page load
+    const applyTheme = () => {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            body.classList.add('light-mode');
+        }
+    };
+
+    // Function to toggle the theme and save the preference
+    const toggleTheme = () => {
+        body.classList.toggle('light-mode');
+        let currentTheme = 'dark'; // Default to dark
+        if (body.classList.contains('light-mode')) {
+            currentTheme = 'light';
+        }
+        localStorage.setItem('theme', currentTheme);
+    };
+
+    // Add event listener to the button
+    themeToggleButton.addEventListener('click', toggleTheme);
+
+    // Apply the saved theme when the page loads
+    applyTheme();
+})();
+</script>
+
+</script>
+
+<div id="scroll-race-track">
+    <div class="line"></div>
+    <div class="line"></div>
+    <img id="scroll-f1-car" src="assets/css/racing-car.png" alt="F1 car scroll progress indicator">
+    <img id="checkered-flag" src="assets/css/start.png" alt="Checkered flag">
+</div>
+    
+<script>
+(function() {
+    const car = document.getElementById('scroll-f1-car');
+    const track = document.getElementById('scroll-race-track');
+
+    if (!car || !track) return;
+
+    const controlCarPosition = () => {
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
+        
+        // Prevent division by zero on pages that don't scroll
+        if (documentHeight <= 0) return;
+
+        const scrollPercent = scrollTop / documentHeight;
+        
+        // Calculate the total raceable distance on the track
+        // (Track height minus car height minus flag height and some padding)
+        const raceableHeight = track.offsetHeight - car.offsetHeight - 50;
+        
+        // Calculate the new top position
+        const newTop = scrollPercent * raceableHeight;
+
+        car.style.top = `${newTop}px`;
+    };
+
+    window.addEventListener('scroll', controlCarPosition, { passive: true });
+    
+    // Set initial position on load
+    controlCarPosition();
+})();
+</script>
+    
+</body>
+</html>

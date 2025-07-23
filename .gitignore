@@ -1,0 +1,5 @@
+*.csv# Ignore heavy cache and data files
+*.sqlite
+*.ff1pkl
+cache/
+__pycache__/

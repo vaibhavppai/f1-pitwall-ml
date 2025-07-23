@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Analysis - F1 AI PitWall</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<main class="container">
+
+<header class="hero-banner">
+    <h1>Formula1 AI PitWall</h1>
+    <h2>CS 7641 - Summer 25 - Group 4</h2>
+</header>
+    
+<div id="theme-toggle">
+    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.106a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.894 17.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.894 17.894a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM3 12a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5H2.25A.75.75 0 013 12zM6.106 6.106a.75.75 0 001.06-1.06l-1.591-1.59a.75.75 0 00-1.061 1.06l1.591 1.59z"></path></svg>
+    <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 004.463-.948.75.75 0 01.82.162a10.5 10.5 0 11-14.4-14.4.75.75 0 01.819.162z" clip-rule="evenodd"></path></svg>
+</div>
+    
+<nav>
+    <a href="index.html">Home</a>
+    <a href="tire-choice-model.html">Tyre Choice Model</a>
+    <a href="qualifying-pace-predictor.html">Qualifying Predictor</a>
+    <a href="track-analysis.html">Track Analysis</a>
+    <a href="pit-stop-predictor.html">Pit Stop Predictor</a>
+    <a href="driver-analysis.html">Driver DNA</a> </nav>
+</nav>
+
+<section id="results-driver-dna">
+    <h2>Analysis: Driver DNA</h2>
+    <p>Using unsupervised machine learning to move beyond lap times and quantify the unique 'fingerprint' of each driver's on-track performance.</p>
+    <div class="grid-3">
+        <div class="card">
+            <h3>Phase 1: High-Level Profiling (The "What" and "Who")</h3>
+            <p>We began by aggregating telemetry from every lap into a set of Key Performance Indicators (KPIs). Using PCA and K-Means clustering, we successfully profiled all drivers into distinct, high-level archetypes such as "Aggressive Brakers," "Smooth Operators," and "Straight-Line Specialists," answering the question of what their overall style is.</p>
+        </div>
+        <div class="card">
+            <h3>Phase 2: Granular Event Analysis (The "How" and "Why")</h3>
+            <p>We then moved from high-level KPIs to the raw telemetry traces. Using time-series clustering on braking events, we identified the canonical "input signatures" for different drivers, revealing the specific V-shaped vs. U-shaped speed profiles that define their technique. This granular analysis answers how drivers achieve their performance.</p>
+        </div>
+        <div class="card">
+            <h3>Phase 3: Codifying Insights (The "Rules")</h3>
+            <p>Finally, we used Association Rule Mining to formalize our findings. By converting telemetry into "if-then" rules, we quantitatively confirmed the driving logic for different circuits and styles. This codifies the why behind on-track decisions and validates the archetypes and signatures discovered in the previous phases.</p>
+        </div>
+    </div>
+</section>
+    
+<section id="exploring-telemetry-data">
+    <h2>Understanding telemetry data</h2>
+    <article class="results-card">
+        <h3>Creating Circuit Layouts from GeoJSON and Telemetry - Sanity Check</h3>
+        <div class="gallery-grid">
+            <a href="driver-analysis/melbourne_geojson.png" class="js-lightbox-trigger"><img src="driver-analysis/melbourne_geojson.png" alt="Melbourne Track from GeoJSON"></a>
+            <a href="driver-analysis/melbourne_telemetry.png" class="js-lightbox-trigger"><img src="driver-analysis/melbourne_telemetry.png" alt="Melbourne Track from GeoJSON"></a>
+        </div>
+        <h4>Limitations of GeoJSON Data</h4>
+        <p> We discovered that while GeoJSON and telemetry data match in terms of understanding track layout, GeoJSON data is sparse and falls short when it comes to capturing nuances of the track's turns. Telemetry data also provides elevation coordinates which help us downstream in understanding a track's elevation changes.
+        </p>
+        <h4>Finding Corners with Code: A Clustering Approach</h4>
+        <div class="gallery-grid">
+            <a href="driver-analysis/corner_clusters_austin.png" class="js-lightbox-trigger"><img src="driver-analysis/corner_clusters_austin.png" alt="Austin Corner Clusters"></a>
+            <a href="driver-analysis/corner_clusters_le_castellet.png" class="js-lightbox-trigger"><img src="driver-analysis/corner_clusters_le_castellet.png" alt="Le Castellet Corner Clusters"></a>
+        </div>
+        <p>
+    <strong>DBSCAN</strong> on high-curvature (X,Y) coordinates; automatically discovers the number of turns.<br>
+    <strong>Process</strong>:
+        <ol>
+            <li>Calculate turning angle at each coordinate point along the track layout.</li>
+            <li>Filter for points with high curvature to create a dataset of potential corner locations.</li>
+            <li>Cluster these corner points using DBSCAN; the number of dense clusters found equals the number of turns.</li>
+        </ol>
+        </p>
+       </article>
+</section>
+
+<section id="phase-1">
+    <h2>High-Level Profiling (The "What" and "Who")</h2>
+    <article class="results-card">
+        <p>
+        The first phase of our project was dedicated to answering the most fundamental questions: What are the distinct archetypes of racetracks on the calendar, and who are the drivers that fit into different stylistic profiles? To achieve this, we needed to transform the raw, high-frequency telemetry data containing thousands of data points per lap into a simple, comparable format.
+    </p>
+    <div class="gallery-grid">
+            <a href="driver-analysis/driver_archetypes.png" class="js-lightbox-trigger"><img src="driver-analysis/driver_archetypes.png" alt="2D Driver Cluster"></a>
+        </div>
+        <p>
+        We can see in the above plot that the rookies and new drivers are classified into "Straight-Line Specialists" while the more experienced drivers fall in the "Balanced Style". Norris and Piastri, who currently have the best cars on the grid are in one cluster - "Smooth and Consistent". This is in line with what we see in the actual sport today.
+        </p>
+        <h4>Feature Engineering: Creating a "Performance Fingerprint"</h4>
+    <p>
+        The core of this phase was feature engineering. We aggregated the complex time-series data for each individual lap into a single, fixed-length vector of Key Performance Indicators (KPIs). This process creates a concise "performance fingerprint" that represents the essence of that lap. The key KPIs we engineered include:
+    </p>
+    <ul>
+        <li><strong>Power & Aggression Metrics:</strong> These quantify how a driver utilizes the car's powertrain and brakes.
+            <ul>
+                <li><code>Throttle_Full_Pct</code>: The percentage of the lap spent at 100% throttle.</li>
+                <li><code>Braking_Intensity</code>: The peak negative G-force achieved during braking zones.</li>
+                <li><code>RPM_Avg</code> & <code>RPM_Std_Dev</code>: The mean and standard deviation of engine RPM, indicating usage patterns.</li>
+            </ul>
+        </li>
+        <li><strong>Cornering & Handling Metrics:</strong> These describe how the car and driver behave through corners.
+            <ul>
+                <li><code>Total_G_Mean</code>: The average combined longitudinal and lateral G-force, showing how consistently the driver operates at the limit of adhesion.</li>
+            </ul>
+        </li>
+        <li><strong>Strategy Metrics:</strong> These capture elements related to on-track strategy.
+            <ul>
+                <li><code>DRS_Uptime_Pct</code>: The percentage of the lap where the Drag Reduction System was active.</li>
+                <li><code>Gear_Changes_per_Lap</code>: The total number of gear shifts, often indicating how "busy" a track is.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h4>Algorithms: Discovering the Archetypes</h4>
+    <p>
+        With a KPI matrix established for all laps, we employed a two-stage unsupervised learning pipeline to discover the hidden patterns:
+    </p>
+    <ol>
+        <li>
+            <strong>Principal Component Analysis (PCA):</strong> To handle the complexity of our many KPIs (which are often correlated), we first applied PCA. This technique distilled our features into a few, more meaningful "axes of performance." For example, it might combine throttle, DRS, and RPM metrics into a single "Straight-Line Performance" component. This crucial step reduces noise and makes the subsequent clustering far more robust and interpretable.
+        </li>
+        <li>
+            <strong>K-Means Clustering:</strong> Using the simplified principal component scores, we then applied the K-Means algorithm. We ran this process twice:
+            <ul>
+                <li><strong>For Drivers:</strong> By averaging the KPIs for each unique driver over the season, we clustered the drivers. This revealed distinct stylistic profiles, such as "Aggressive Brakers" and "Smooth & Consistent Operators."</li>
+            </ul>
+        </li>
+    </ol>
+    <p>
+        The outcome of Phase 1 was a foundational, high-level understanding of our dataset. We successfully transformed millions of raw data points into a clear, quantitative classification of both the circuits and the competitors, setting the stage for the more granular event analysis in Phase 2.
+    </p>
+    </article>    
+</section>
+
+<section id="phase-2">
+    <h2>Granular Event Analysis (The "How" and "Why")</h2>
+        <article class="results-card">
+            <p>
+        While Phase 1 provided a high-level overview of driver and track styles, Phase 2 dives into the raw, high-frequency telemetry to answer the crucial questions of "how" and "why." The goal was to move beyond aggregated KPIs and analyze the specific, millisecond-level events and input shapes that define on-track performance.
+    </p>
+            <div class="gallery-grid">
+            <a href="driver-analysis/telemetry_anomaly.png" class="js-lightbox-trigger"><img src="driver-analysis/telemetry_anomaly.png" alt="VER Tele Anomaly"></a>
+            <a href="driver-analysis/braking_sig.png" class="js-lightbox-trigger"><img src="driver-analysis/braking_sig.png" alt="VER Braking Sig"></a>
+            <a href="driver-analysis/lec_quadrant.png" class="js-lightbox-trigger"><img src="driver-analysis/lec_quadrant.png" alt="Lec Quadrant"></a>
+            <a href="driver-analysis/ric_quadrant.png" class="js-lightbox-trigger"><img src="driver-analysis/ric_quadrant.png" alt="Ric Quadrant"></a>
+        </div>
+            <h4>Anomaly Detection: Finding the Critical Moments</h4>
+    <p>
+        The first step was to identify moments within a lap that deviated from the norm. These "anomalies" are not necessarily errors; they represent the most complex and information-rich parts of the lap, such as heavy braking zones or moments of instability.
+    </p>
+    <ul>
+        <li>
+            <strong>Algorithm Used:</strong> We employed an <strong>Isolation Forest</strong>, a powerful and efficient algorithm that works by "isolating" outliers. It learns the normal operating envelope of a car at a specific track and then assigns an <code>anomaly_score</code> to every single telemetry timestamp.
+        </li>
+        <li>
+            <strong>Feature Engineering:</strong> To provide context to these anomalies, we engineered a <code>time_gain_loss</code> feature by comparing each lap to a fast reference lap. This allowed us to see if an anomalous event resulted in a time gain or loss.
+        </li>
+    </ul>
+
+    <div class="plot-analysis">
+        <h4>Analysis of the Four-Quadrant Plots</h4>
+        <p>
+            By plotting the maximum anomaly score against the time gained or lost for every micro-sector of a lap, we created an automated performance review. The results for the 2022 Sakhir GP, where Charles Leclerc won and Daniel Ricciardo struggled, perfectly illustrate the power of this technique:
+        </p>
+        <ul>
+            <li>
+                <strong>Charles Leclerc (Winner):</strong> His plot shows a dense cloud of points in the "Consistent Overperformance" and "Brilliance/Opportunity" quadrants. This is the data-driven fingerprint of a driver who was not only consistently faster than his reference but was also successfully pushing the limits to find extra time—the exact profile you'd expect from the race winner.
+            </li>
+            <li>
+                <strong>Daniel Ricciardo (Finished 14th):</strong> His plot tells the opposite story. The data is heavily concentrated in the "Consistent Underperformance" quadrant, indicating a fundamental lack of pace. Furthermore, his high-anomaly events are skewed towards the "Mistakes/Errors" quadrant, suggesting that when he tried to push, it often resulted in a time loss. This visualizes the narrative of a driver struggling to get comfortable with the car.
+            </li>
+        </ul>
+    </div>
+
+    <h4>Time-Series Clustering: Deconstructing Driver Signatures</h4>
+    <p>
+        To understand the "how" behind different driving styles, we moved beyond single-point anomalies to analyze the *shape* of driver inputs over time. We focused on braking events to identify the canonical "braking signatures" that define a driver's technique.
+    </p>
+    <ul>
+        <li>
+            <strong>Algorithm Used:</strong> Instead of using specialized time-series libraries, we developed a robust method using <strong>K-Means Clustering</strong>. We first engineered descriptive features for each braking event's speed trace (e.g., initial speed, speed drop, shape metric). We then clustered these features to group the braking events into distinct types.
+        </li>
+    </ul>
+     <div class="plot-analysis">
+        <h4>Analysis of the Braking Signature Plots</h4>
+        <p>
+            By averaging the speed traces for all events within each cluster, we visualized the canonical braking profiles. The analysis successfully identified two primary signatures:
+        </p>
+        <ul>
+            <li>
+                <strong>Signature 1 ("U-Shaped"):</strong> A braking profile with a higher entry and exit speed and a curved deceleration. This represents braking for medium-to-high-speed corners where maintaining momentum is key.
+            </li>
+            <li>
+                <strong>Signature 2 ("V-Shaped"):</strong> A profile with a lower entry speed and a much sharper, more linear deceleration to a lower minimum speed. This is the classic signature for a slow, tight corner where the focus is on maximizing braking in a straight line.
+            </li>
+        </ul>
+    </div>
+        </article>    
+</section>
+
+<section id="phase-3">
+    <h2>Codifying Insights (The "Rules")</h2>
+        <article class="results-card">
+            <p>
+        The final phase of our analysis aimed to formalize the patterns we observed into a concrete set of "if-then" rules. The goal was to move beyond descriptive statistics and codify the unwritten "grammar" of how to drive a specific circuit. This allows us to quantitatively confirm the driving logic required for optimal performance.
+    </p>
+            <div class="gallery-grid">
+            <a href="driver-analysis/merc_monaco.jpg" class="js-lightbox-trigger"><img src="driver-analysis/merc_monaco.jpg" alt="Merc Monaco"></a>
+            <a href="driver-analysis/monaco_rules.png" class="js-lightbox-trigger"><img src="driver-analysis/monaco_rules.png" alt="Monaco Rules"></a>
+            <a href="driver-analysis/merc_monza.png" class="js-lightbox-trigger"><img src="driver-analysis/merc_monza.png" alt="Lec Merc Monza"></a>
+            <a href="driver-analysis/monza_rules.png" class="js-lightbox-trigger"><img src="driver-analysis/monza_rules.png" alt="Monza Rules"></a>
+        </div>
+            <h4>Feature Engineering & Algorithm</h4>
+    <p>
+        Association Rule Mining requires data in a "market basket" format, where each row is a transaction and the columns are discrete items. To achieve this, we transformed our continuous telemetry data:
+    </p>
+    <ul>
+        <li>
+            <strong>Feature Engineering (Discretization):</strong> We converted continuous channels like <code>Speed</code> and <code>RPM</code> into categorical bins (e.g., <code>Speed_Low</code>, <code>Speed_Medium</code>, <code>Speed_High</code>). Each telemetry timestamp, with its collection of binned states, became a "transaction."
+        </li>
+        <li>
+            <strong>Algorithm Used:</strong> We employed the <strong>FP-Growth</strong> algorithm, an efficient method for discovering frequent patterns in large datasets. We searched for rules with high confidence (the probability that the "then" part is true) and high lift (how much more often the items appear together than expected by chance).
+        </li>
+    </ul>
+
+    <div class="plot-analysis">
+        <h4>Analysis of the Rule Visualization Plots</h4>
+        <p>
+            To validate our findings, we visualized where the most characteristic rules for two very different tracks—Monza and Monaco—were active on the circuit map. The results perfectly align with the real-world understanding of these tracks, as shown in the Mercedes AMG F1 circuit guides.
+        </p>
+        <ul>
+            <li>
+                <strong>Monza (The "Temple of Speed"):</strong> Our model discovered a key high-speed rule: <code>IF (Throttle_Full, Speed_Very_High) THEN (Gear_8, RPM_High)</code>. When we plotted where this rule was active, it perfectly highlighted the four main straights of the Monza circuit. This aligns exactly with the Mercedes map, which shows these sections are taken in 7th or 8th gear at maximum speed. The model successfully learned and visualized the defining characteristic of a power circuit.
+            </li>
+            <li>
+                <strong>Monaco (The Technical Challenge):</strong> For Monaco, the model found a defining low-speed rule: <code>IF (Speed_Low, Throttle_Partial) THEN (Gear_2, RPM_Low)</code>. The visualization shows this rule is active exclusively in the tightest sections of the track: the Grand Hotel Hairpin (Turn 6), the Nouvelle Chicane (Turns 10-11), and the Rascasse/Antony Noghès complex (Turns 18-19). This again matches the Mercedes guide, which shows these corners are taken in 1st, 2nd, or 3rd gear at the lowest speeds on the entire F1 calendar.
+            </li>
+        </ul>
+        <p>
+            This final step provides a powerful visual validation of our entire project. It demonstrates that our unsupervised learning pipeline has not only found statistical patterns but has successfully learned and codified the fundamental, real-world driving logic of two iconic and vastly different Formula 1 circuits.
+        </p>
+    </div>
+ </article>    
+</section>
+
+<section id="conclusion">
+    <h2>Putting it All Together</h2>
+        <article class="results-card">
+            <h3>Conclusion: From Raw Data to the Racing Line</h3>
+    <p>
+        This project successfully demonstrates a comprehensive, multi-phase framework for deconstructing Formula 1 performance using unsupervised machine learning. By systematically moving from a high-level overview to a granular, event-based analysis, we have transformed millions of raw telemetry points into a rich, interpretable narrative of driver skill, car behavior, and track characteristics.
+    </p>
+
+    <h4>A Strcutured Approach to Unsupervised Analysis</h4>
+    <p>
+        Our three-phase approach created a virtuous cycle, where the insights from each stage provided the context for the next:
+    </p>
+    <ul>
+        <li>
+            In <span class="highlight">Phase 1</span>, we answered the "what" and "who" by using PCA and K-Means clustering to distill complex data into clear, high-level archetypes. We successfully classified tracks into categories like "Power & Speed Circuits" and drivers into profiles such as "Aggressive Brakers," providing a foundational understanding of the performance landscape.
+        </li>
+        <li>
+            In <span class="highlight">Phase 2</span>, we investigated the "how" and "why" behind these profiles. Anomaly detection pinpointed the most critical moments of a lap, while our Four-Quadrant analysis contextualized them as either mistakes or moments of brilliance. Furthermore, by clustering the shape of speed traces, we deconstructed driver techniques into their fundamental "signatures," revealing the visual difference between a "V-shaped" and "U-shaped" braking style.
+        </li>
+        <li>
+            Finally, in <span class="highlight">Phase 3</span>, we codified our findings by applying Association Rule Mining. This transformed our observations into a set of concrete, "if-then" rules that represent the underlying driving logic for a specific circuit. Visualizing these rules on the track map provided a powerful validation, confirming that our model had successfully learned the distinct demands of vastly different circuits like Monza and Monaco.
+        </li>
+    </ul>
+
+    <p>
+        Ultimately, this section proves that by combining feature engineering, clustering, anomaly detection, and rule mining, it is possible to move beyond simple lap times. We have created a framework that can quantify driver style, identify the key moments that define a race, and codify the very "rules" of what it takes to be fast, transforming raw data into true strategic intelligence.
+    </p>
+ </article>    
+</section>
+
+<footer class="site-footer">
+    <div class="footer-section">
+        <h4>References</h4>
+        <ol>
+            <li>F. Brusik, Predicting Lap Times in a Formula 1 Race Using Deep Learning Algorithms, 2024.</li>
+            <li>E. El Haber et al., "Formula 1 Race Winner Prediction Using Random Forest and SHAP Analysis," 2025.</li>
+            <li>S. A. Menon et al., "F1 Lap Analysis and Result Prediction," 2024.</li>
+            <li>C. L. W. Choo, Real-time decision making in motorsports, 2015.</li>
+            <li>M. Keertish Kumar and N. Preethi, "Formula One Race Analysis Using Machine Learning," 2023.</li>
+        </ol>
+    </div>
+    <div class="footer-section">
+        <h4>Project Resources</h4>
+        <ul class="resource-links">
+            <li><a href="https://gtvault.sharepoint.com/:x:/s/ML7641Project568/EUXYbfK5vtJGrfBQwmEdczsBMaH1GnclwjVkn6ma7PoFgg?e=tfWXDv" target="_blank">View the Gantt Chart</a></li>
+            <li><a href="https://youtu.be/QrAcd8dy-o4" target="_blank">View our Project Proposal Presentation</a></li>
+            <li><a href="https://gtvault.sharepoint.com/:p:/s/ML7641Project568/EeoJLlt2CJ9AuVhaN37ZVsoB3P0uHIVMmfrBcFfQ6_1i3Q?e=lprBsp" target="_blank">View the Final Presentation</a></li>
+        </ul>
+    </div>
+    <div class="footer-section">
+        <h4>The Pit Crew</h4>
+        <table>
+            <thead><tr><th>Team Member</th><th>Contributions</th></tr></thead>
+            <tbody>
+                <tr><td>Krtin Kala</td><td>Track Clustering, Driver Analysis, Web Page Design</td></tr>
+                <tr><td>Vaibhav Pai</td><td>Track Clustering, Driver Analysis, Web Page Design</td></tr>
+                <tr><td>Paras Singh</td><td>Best Qualifying Lap Predictor</td></tr>
+                <tr><td>Carter Tegen</td><td>Tire Change Analysis</td></tr>
+                <tr><td>Sreevickrant Sreekanth</td><td>Tire Stint and Pitstop Predictor</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="footer-award">
+        <p>We will opt in for the award consideration.</p>
+    </div>
+</footer>
+
+</main>
+
+<div class="lightbox js-lightbox" id="image-lightbox">
+  <div class="lightbox-content">
+    <span class="lightbox-close js-lightbox-close">×</span>
+    <img src="" alt="Fullscreen image" class="lightbox-image">
+  </div>
+</div>
+
+<script>
+(function(){
+  const lb    = document.getElementById('image-lightbox');
+  const img   = lb.querySelector('.lightbox-image');
+  const close = lb.querySelector('.lightbox-close');
+  const triggers = document.querySelectorAll('.js-lightbox-trigger');
+  triggers.forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      img.src = a.href;
+      lb.classList.add('is-visible');
+    });
+  });
+  [close, lb].forEach(el => {
+    el.addEventListener('click', e => {
+      if (el === lb && e.target !== lb) return;
+      lb.classList.remove('is-visible');
+      img.src = '';
+    });
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && lb.classList.contains('is-visible')) {
+      lb.classList.remove('is-visible');
+      img.src = '';
+    }
+  });
+})();
+</script>
+
+<script>
+(function() {
+    const themeToggleButton = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    // Function to apply the saved theme on page load
+    const applyTheme = () => {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            body.classList.add('light-mode');
+        }
+    };
+
+    // Function to toggle the theme and save the preference
+    const toggleTheme = () => {
+        body.classList.toggle('light-mode');
+        let currentTheme = 'dark'; // Default to dark
+        if (body.classList.contains('light-mode')) {
+            currentTheme = 'light';
+        }
+        localStorage.setItem('theme', currentTheme);
+    };
+
+    // Add event listener to the button
+    themeToggleButton.addEventListener('click', toggleTheme);
+
+    // Apply the saved theme when the page loads
+    applyTheme();
+})();
+</script>
+
+</script>
+
+<div id="scroll-race-track">
+    <div class="line"></div>
+    <div class="line"></div>
+    <img id="scroll-f1-car" src="assets/css/racing-car.png" alt="F1 car scroll progress indicator">
+    <img id="checkered-flag" src="assets/css/start.png" alt="Checkered flag">
+</div>
+    
+<script>
+(function() {
+    const car = document.getElementById('scroll-f1-car');
+    const track = document.getElementById('scroll-race-track');
+
+    if (!car || !track) return;
+
+    const controlCarPosition = () => {
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
+        
+        // Prevent division by zero on pages that don't scroll
+        if (documentHeight <= 0) return;
+
+        const scrollPercent = scrollTop / documentHeight;
+        
+        // Calculate the total raceable distance on the track
+        // (Track height minus car height minus flag height and some padding)
+        const raceableHeight = track.offsetHeight - car.offsetHeight - 50;
+        
+        // Calculate the new top position
+        const newTop = scrollPercent * raceableHeight;
+
+        car.style.top = `${newTop}px`;
+    };
+
+    window.addEventListener('scroll', controlCarPosition, { passive: true });
+    
+    // Set initial position on load
+    controlCarPosition();
+})();
+</script>
+
+</body>
+</html>

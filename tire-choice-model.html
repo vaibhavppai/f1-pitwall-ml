@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tire Choice Model - F1 AI PitWall</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<main class="container">
+
+<header class="hero-banner">
+    <h1>Formula 1 AI PitWall</h1>
+    <h2>CS 7641 - Summer 25 - Group 4</h2>
+</header>
+
+<div id="theme-toggle">
+    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.106a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.894 17.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.894 17.894a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM3 12a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5H2.25A.75.75 0 013 12zM6.106 6.106a.75.75 0 001.06-1.06l-1.591-1.59a.75.75 0 00-1.061 1.06l1.591 1.59z"></path></svg>
+    <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 004.463-.948.75.75 0 01.82.162a10.5 10.5 0 11-14.4-14.4.75.75 0 01.819.162z" clip-rule="evenodd"></path></svg>
+</div>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="tire-choice-model.html">Tyre Choice Model</a>
+    <a href="qualifying-pace-predictor.html">Qualifying Predictor</a>
+    <a href="track-analysis.html">Track Analysis</a>
+    <a href="pit-stop-predictor.html">Pit Stop Predictor</a>
+    <a href="driver-analysis.html">Driver DNA</a> </nav>
+</nav>
+
+<section id="results-tire-choice">
+    <h2>Analysis: Tyre Choice Modeling</h2>
+    <article class="results-card">
+        <h3>The Rubber Revolution: Tyre Choice Modeling</h3>
+        <div class="gallery-grid">
+            <a href="Tire_Analysis/images/hyperparameter.png" class="js-lightbox-trigger"><img src="Tire_Analysis/images/hyperparameter.png" alt="Hyperparameter Sweep"></a>
+            <a href="Tire_Analysis/images/residual.png" class="js-lightbox-trigger"><img src="Tire_Analysis/images/residual.png" alt="Residuals"></a>
+            <a href="Tire_Analysis/images/compound_transition.png" class="js-lightbox-trigger"><img src="Tire_Analysis/images/compound_transition.png" alt="Compound Transition"></a>
+            <a href="Tire_Analysis/images/confusion_matrix.png" class="js-lightbox-trigger"><img src="Tire_Analysis/images/confusion_matrix.png" alt="Confusion Matrix"></a>
+            <a href="Tire_Analysis/images/feature_importance.png" class="js-lightbox-trigger"><img src="Tire_Analysis/images/feature_importance.png" alt="Feature Importance"></a>
+        </div>
+        <h4>Data Pre-processing </h4>
+        <p>The data was downloaded via the FastF1 database. The main preprocessing technique in the current work is data reduction via feature selection. For regression analysis of predicting lap time improvement by switching tires, the chosen features are reduced to Air Temperature, Track Temperature, Humidity, Pressure, Rainfall (T/F), Wind Direction, and Wind Speed. The chosen model, XGBoost, is generally pretty resilient to poorly transformed data since it is tree based, but there is certainly room for future work to help aid the convergence of these models.</p>
+        <h4>ML Algorithms / Models Implemented</h4>
+        <p>A few different models were chosen and compared for the classification/regression problems. For the regression, predicting lap time improvement for a given tire change, the naive guess (mean), linear regression, and XGBoost were implemented. XGBoost performed the best, with the hyperparameter sweep for model depth seen above. XGBoost was chosen because it is a well performing tree based model for both of these problems, which performs very well at scale and can be easily tuned to prevent overfitting. For the classification, predicting which tire will be next for the given weather conditions, I compared the naive guess of the most common label, random forest, and XGClassifier. Again, the boosted model performed the best of the three, with the highest test accuracy of 73%.</p>
+        <h4>Quantitative Metrics</h4>
+        Regression
+        <table>
+            <thead><tr><th>Model</th><th>MSE</th></tr></thead>
+            <tbody><tr><td>Naive</td><td>0.08</td></tr></tbody>
+            <tbody><tr><td>Linear Regression</td><td>0.078</td></tr></tbody>
+            <tbody><tr><td>XGBoost</td><td>0.054</td></tr></tbody>
+        </table>
+        Classification
+        <table>
+            <thead><tr><th>Model</th><th>Accuracy</th></tr></thead>
+            <tbody><tr><td>Naive</td><td>0.359</td></tr></tbody>
+            <tbody><tr><td>Random Forest</td><td>0.718</td></tr></tbody>
+            <tbody><tr><td>XG Classifier</td><td>0.730</td></tr></tbody>
+        </table>
+        <h4>Final Model Analysis</h4>
+        <p>The final XGBoost model demonstrated a strong predictive foundation, with hyper-parameter tuning identifying an optimal tree depth of four levels to balance performance against overfitting. The residual analysis, however, indicates a slight negative correlation, suggesting the model systematically handles certain data points with a consistent error margin. This highlights the inherent challenge of predicting tire performance based solely on weather data, pointing to the significant impact of unmodeled variables like driver input and real-time track evolution. However, overall, the comparison of the models still demonstrates the gradient boosted forest models to perform better than simpler models, indicating nonlinearities and high gradients in the dataset that were best captured by higher fidelity models.</p>
+    </article>
+</section>
+
+<footer class="site-footer">
+    <div class="footer-section">
+        <h4>References</h4>
+        <ol>
+            <li>F. Brusik, Predicting Lap Times in a Formula 1 Race Using Deep Learning Algorithms, 2024.</li>
+            <li>E. El Haber et al., "Formula 1 Race Winner Prediction Using Random Forest and SHAP Analysis," 2025.</li>
+            <li>S. A. Menon et al., "F1 Lap Analysis and Result Prediction," 2024.</li>
+            <li>C. L. W. Choo, Real-time decision making in motorsports, 2015.</li>
+            <li>M. Keertish Kumar and N. Preethi, "Formula One Race Analysis Using Machine Learning," 2023.</li>
+        </ol>
+    </div>
+    <div class="footer-section">
+        <h4>Project Resources</h4>
+        <ul class="resource-links">
+            <li><a href="https://gtvault.sharepoint.com/:x:/s/ML7641Project568/EUXYbfK5vtJGrfBQwmEdczsBMaH1GnclwjVkn6ma7PoFgg?e=tfWXDv" target="_blank">View the Gantt Chart</a></li>
+            <li><a href="https://youtu.be/QrAcd8dy-o4" target="_blank">View our Project Proposal Presentation</a></li>
+            <li><a href="https://gtvault.sharepoint.com/:p:/s/ML7641Project568/EeoJLlt2CJ9AuVhaN37ZVsoB3P0uHIVMmfrBcFfQ6_1i3Q?e=lprBsp" target="_blank">View the Final Presentation</a></li>
+        </ul>
+    </div>
+    <div class="footer-section">
+        <h4>The Pit Crew</h4>
+        <table>
+            <thead><tr><th>Team Member</th><th>Contributions</th></tr></thead>
+            <tbody>
+                <tr><td>Krtin Kala</td><td>Track Clustering, Driver Analysis, Web Page Design</td></tr>
+                <tr><td>Vaibhav Pai</td><td>Track Clustering, Driver Analysis, Web Page Design</td></tr>
+                <tr><td>Paras Singh</td><td>Best Qualifying Lap Predictor</td></tr>
+                <tr><td>Carter Tegen</td><td>Tire Change Analysis</td></tr>
+                <tr><td>Sreevickrant Sreekanth</td><td>Tire Stint and Pitstop Predictor</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="footer-award">
+        <p>We will opt in for the award consideration.</p>
+    </div>
+</footer>
+
+</main>
+
+<div class="lightbox js-lightbox" id="image-lightbox">
+  <div class="lightbox-content">
+    <span class="lightbox-close js-lightbox-close">×</span>
+    <img src="" alt="Fullscreen image" class="lightbox-image">
+  </div>
+</div>
+
+<script>
+(function(){
+  const lb    = document.getElementById('image-lightbox');
+  const img   = lb.querySelector('.lightbox-image');
+  const close = lb.querySelector('.lightbox-close');
+  const triggers = document.querySelectorAll('.js-lightbox-trigger');
+  triggers.forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      img.src = a.href;
+      lb.classList.add('is-visible');
+    });
+  });
+  [close, lb].forEach(el => {
+    el.addEventListener('click', e => {
+      if (el === lb && e.target !== lb) return;
+      lb.classList.remove('is-visible');
+      img.src = '';
+    });
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && lb.classList.contains('is-visible')) {
+      lb.classList.remove('is-visible');
+      img.src = '';
+    }
+  });
+})();
+</script>
+
+<script>
+(function() {
+    const themeToggleButton = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    // Function to apply the saved theme on page load
+    const applyTheme = () => {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            body.classList.add('light-mode');
+        }
+    };
+
+    // Function to toggle the theme and save the preference
+    const toggleTheme = () => {
+        body.classList.toggle('light-mode');
+        let currentTheme = 'dark'; // Default to dark
+        if (body.classList.contains('light-mode')) {
+            currentTheme = 'light';
+        }
+        localStorage.setItem('theme', currentTheme);
+    };
+
+    // Add event listener to the button
+    themeToggleButton.addEventListener('click', toggleTheme);
+
+    // Apply the saved theme when the page loads
+    applyTheme();
+})();
+</script>
+
+</script>
+
+<div id="scroll-race-track">
+    <div class="line"></div>
+    <div class="line"></div>
+    <img id="scroll-f1-car" src="assets/css/racing-car.png" alt="F1 car scroll progress indicator">
+    <img id="checkered-flag" src="assets/css/start.png" alt="Checkered flag">
+</div>
+    
+<script>
+(function() {
+    const car = document.getElementById('scroll-f1-car');
+    const track = document.getElementById('scroll-race-track');
+
+    if (!car || !track) return;
+
+    const controlCarPosition = () => {
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
+        
+        // Prevent division by zero on pages that don't scroll
+        if (documentHeight <= 0) return;
+
+        const scrollPercent = scrollTop / documentHeight;
+        
+        // Calculate the total raceable distance on the track
+        // (Track height minus car height minus flag height and some padding)
+        const raceableHeight = track.offsetHeight - car.offsetHeight - 50;
+        
+        // Calculate the new top position
+        const newTop = scrollPercent * raceableHeight;
+
+        car.style.top = `${newTop}px`;
+    };
+
+    window.addEventListener('scroll', controlCarPosition, { passive: true });
+    
+    // Set initial position on load
+    controlCarPosition();
+})();
+</script>
+
+</body>
+</html>
