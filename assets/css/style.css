@@ -1,0 +1,414 @@
+/* F1 PREDICTOR STYLESHEET */
+/* Inspired by the official F1 brand guidelines and modern web design principles. */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@400;700&display=swap');
+
+:root {
+    --f1-red: #E22420;
+    --f1-black: #060605;
+    --f1-dark-grey: #151515;
+    --f1-grey: #A7A6A3;
+    --f1-off-white: #F4F4F4;
+    --f1-high-vis-white: #FEFFFF;
+    --f1-darker-red: #A01B18; /* Add this line */
+    --font-headline: 'Orbitron', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --hero-gradient: linear-gradient(rgba(6, 6, 5, 0.85), rgba(6, 6, 5, 0.95));
+}
+
+body.light-mode {
+    --f1-black: #FFFFFF; /* Changed to pure white */
+    --f1-dark-grey: #FEFFFF;
+    --f1-off-white: #151515;
+    --f1-high-vis-white: #060605;
+    --hero-gradient: linear-gradient(rgba(244, 244, 244, 0.75), rgba(244, 244, 244, 0.85));
+}
+
+/* Reset & Base */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); background: var(--f1-black); color: var(--f1-off-white); line-height: 1.6; }
+.container { max-width: 1200px; margin: auto; padding: 20px; }
+
+#theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 30px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 1000;
+    width: 24px;
+    height: 24px;
+}
+
+#theme-toggle svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    fill: var(--f1-off-white);
+}
+
+body:not(.light-mode) .sun-icon {
+    opacity: 0;
+    transform: rotate(-90deg);
+}
+
+body.light-mode .moon-icon {
+    opacity: 0;
+    transform: rotate(90deg);
+}
+
+h1, h2, h3, h4 {
+    font-family: var(--font-headline);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--f1-high-vis-white);
+    margin-bottom: 1rem;
+}
+h2 {
+    font-size: 2.5rem;
+    border-bottom: 3px solid var(--f1-red);
+    padding-bottom: 0.5rem;
+    display: inline-block;
+    margin-bottom: 2rem;
+}
+h3 { font-size: 1.5rem; color: var(--f1-red); }
+
+h4 { font-size: 1.2rem; margin-top: 1.5rem; }
+
+p {
+   margin-bottom: 1rem;
+   max-width: none;
+   text-align: justify;
+   color: var(--f1-off-white);
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* Adds indentation to lists within content sections */
+section ul,
+section ol {
+    padding-left: 2em; /* Creates the indentation */
+    margin-bottom: 1rem;
+}
+
+section {
+    padding: 4rem 0;
+    position: relative; /* This is needed to position the new separator */
+}
+section:last-child { border-bottom: none; }
+
+/* Replace your existing nav rule with this one */
+/* The corrected rule */
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+    border-radius: 8px;
+    margin: -2rem 0 2rem 0;
+    flex-wrap: wrap;
+    background: rgba(21, 21, 21, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* For light mode */
+body.light-mode nav {
+    background: rgba(255, 255, 255, 0.7); /* Semi-transparent light background */
+}
+
+nav a {
+    color: var(--f1-off-white);
+    margin: 5px 15px;
+    text-transform: uppercase;
+    font-family: var(--font-headline);
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    transition: color 0.3s;
+}
+nav a:hover {
+    color: var(--f1-red);
+}
+
+/* For light mode */
+body.light-mode nav {
+    background: rgba(255, 255, 255, 0.7); /* Semi-transparent light background */
+}
+
+.hero-banner {
+    padding: 6rem 2rem;
+    text-align: center;
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+    margin-bottom: 4rem;
+    background-image: var(--hero-gradient), url('https://images.unsplash.com/photo-1554034483-04fda0d3507b?q=80&w=2070');
+}
+.hero-banner h1 { font-size: 4.5rem; font-weight: 900; }
+.hero-banner .subtitle { font-size: 1.2rem; color: var(--f1-grey); margin-top: 0.5rem; }
+
+.card {
+    background: var(--f1-dark-grey);
+    padding: 2rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--f1-red);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap: 2rem; }
+
+.method-card, .results-card {
+    background: rgba(255,255,255,0.03);
+    color: inherit;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+    border: 1px solid #2a2a2a;
+}
+
+.results-card p,
+.method-card p {
+  max-width: none;
+  text-align: justify;
+}
+
+.method-link-card { display: block; color: inherit; }
+.method-link-card:hover .method-card { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
+
+table { width: 100%; border-collapse: collapse; margin-top:1rem; }
+th, td { padding: 0.75rem; text-align: left; border-bottom:1px solid #2a2a2a; }
+thead { background: rgba(226,36,32,0.1); }
+th { font-family: var(--font-headline); font-size:0.8rem; text-transform: uppercase; }
+tbody tr:hover { background: rgba(255,255,255,0.05); }
+
+.gallery-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap:1rem; margin-bottom:2rem; }
+.gallery-grid a { display:block; height:250px; border-radius:8px; overflow:hidden; position:relative; }
+.gallery-grid img { width:100%; height:100%; object-fit:cover; transition:opacity 0.3s; }
+.gallery-grid a:hover img { opacity:0.8; }
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0.85);
+  z-index: 1000;
+}
+
+.lightbox.is-visible {
+  display: flex;
+}
+
+.lightbox-content {
+  position: relative;
+}
+
+.lightbox-image {
+  max-width: 90vw;
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  border: 3px solid var(--f1-off-white);
+  border-radius: 4px;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: -1rem;
+  right: -1rem;
+  font-size: 2rem;
+  color: var(--f1-off-white);
+  cursor: pointer;
+  line-height: 1;
+}
+
+.site-footer {
+    padding: 4rem 0;
+    position: relative; /* This is needed for the new separator */
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+    gap: 2rem;
+}
+.footer-section h4 { color: var(--f1-red); margin-bottom:1rem; }
+.footer-section ul, .footer-section ol { list-style:none; padding:0; }
+.footer-section li { margin-bottom:0.5rem; font-size:0.9rem; color:var(--f1-grey); }
+.footer-award { grid-column:1 / -1; text-align:center; font-style:italic; color:var(--f1-grey); margin-top:2rem; }
+
+@media(max-width:768px) { h1{font-size:3rem;} h2{font-size:2rem;} .hero-banner{padding:4rem 1rem;} .container{padding:10px;} .gallery-grid{grid-template-columns:repeat(auto-fit,minmax(250px,1fr));} }
+
+/* Add this to the end of your style.css */
+body.light-mode nav,
+body.light-mode .method-card,
+body.light-mode .results-card {
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* --- F1 Style Section Separator --- */
+section::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 8px; /* Adjust the height of the separator here */
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* This is the F1 SVG, colored red and embedded directly into the CSS */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 280 12' preserveAspectRatio='none'%3e%3cpath fill='%23E22420' d='M0 0 H270 L280 12 H10 Z' /%3e%3cpath fill='rgba(0,0,0,0.4)' d='M0 5 H273 L277 12 H3 Z' /%3e%3c/svg%3e");
+}
+
+/* Hides the separator after the very last section before the footer */
+section:last-of-type::after {
+    display: none;
+}
+
+/* --- Adds F1 Separator to Footer --- */
+.site-footer::before {
+    content: '';
+    position: absolute;
+    top: 0; /* Places the separator at the top of the footer */
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background-repeat: no-repeat;
+}
+
+/* --- F1 SCROLL RACETRACK STYLES --- */
+#scroll-racetrack-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 200px; /* Adjust size of the track here */
+    z-index: 1001; /* Must be higher than the theme toggle */
+}
+
+#racetrack {
+    width: 100%;
+    height: auto;
+}
+
+#track-path {
+    stroke-width: 6; /* The thickness of the track */
+    stroke: #444;    /* The color of the track */
+}
+
+body.light-mode #track-path {
+    stroke: #ccc; /* Lighter track color for light mode */
+}
+
+/* --- F1 SCROLL RACE TRACK STYLES --- */
+
+/* The main container fixed to the side of the page */
+#scroll-race-track {
+    position: fixed;
+    top: 0;
+    left: 30px; /* Adjust distance from the left edge */
+    width: 30px; /* Adjust width of the track area */
+    height: 100vh; /* Full viewport height */
+    z-index: 1000;
+}
+
+/* --- F1 SCROLL RAIL STYLES --- */
+
+/* The main container for the rails, car, and flag */
+#scroll-race-track {
+    position: fixed;
+    top: 0;
+    left: 30px;
+    width: 30px; /* Container width */
+    height: 100vh;
+    z-index: 1000;
+}
+
+/* Base style for both rail lines */
+#scroll-race-track .line {
+    position: absolute;
+    top: 0;
+    width: 3px; /* Thickness of each rail */
+    height: 100%;
+}
+
+/* The left rail (brighter red) */
+#scroll-race-track .line:first-of-type {
+    left: 8px; /* Position from the left of the container */
+    background-color: var(--f1-red);
+}
+
+/* The right rail (darker red) */
+#scroll-race-track .line:last-of-type {
+    left: 14px; /* Positioned closely next to the first rail */
+    background-color: var(--f1-darker-red);
+}
+
+/* The F1 car, centered on the rails */
+#scroll-f1-car {
+    position: absolute;
+    width: 100%; /* Car will fill the container width */
+    height: auto;
+    top: 0; /* JS will control this */
+    left: 50%;
+    transform: translateX(-58%); /* This perfectly centers the car */
+    transition: top 0.05s linear;
+}
+
+/* The checkered flag at the finish line */
+#checkered-flag {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    height: auto;
+    left: 50%;
+    /* The fix: Adjust the -50% value to nudge the image.
+       Try values like -48% or -52% to get the alignment perfect.
+    */
+    transform: translateX(-58%);
+}
+
+
+
+
+/* TOUR OVERLAY */
+#tour-overlay {
+  position: fixed;
+  inset: 0;                     /* top:0; right:0; bottom:0; left:0 */
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.tour-content {
+  background: var(--f1-dark-grey);
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 400px;
+  text-align: center;
+  color: var(--f1-off-white);
+}
+
+.tour-content h2 {
+  margin-bottom: 1rem;
+  font-family: var(--font-headline);
+}
+
+.tour-content .tour-highlight {
+  background: var(--f1-red);
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.tour-continue {
+  margin-top: 1.5rem;
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+}
